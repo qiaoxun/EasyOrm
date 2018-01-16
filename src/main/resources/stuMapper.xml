@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.test.EasyOrm.IStuMapper">
+<!-- 	<cache eviction="FIFO" flushInterval="60000" size="512" readOnly="true" /> -->
+	<cache type="org.mybatis.caches.ehcache.EhcacheCache"/>
+	
+	<insert id="add" parameterType="stu" statementType="STATEMENT">
+		insert into stu
+		(name,birthDay,age,description)
+		values(#{name},#{birthDay},#{age},#{description})
+	</insert>
+
+	<insert id="batchAdd" parameterType="java.util.List">
+		insert into stu (name,birthDay,age,description) values
+		<foreach collection="list" item="item" separator="," index="index">
+			(#{item.name},#{item.birthDay},#{item.age},#{item.description})
+		</foreach>
+	</insert>
+
+	<update id="update" parameterType="stu" >
+		update stu set name = #{name},
+		age = #{age}, birthDay = #{birthDay}, description = #{description}
+		where id = #{id}
+	</update>
+	
+	<update id="update2" parameterType="stu" >
+		update stu set name = '123445www' where id = 1
+	</update>
+
+	<update id="batchUpdate" parameterType="stu">
+		<foreach collection='list' item='stu' separator=";" index="index">
+			update stu set name = #{stu.name}, age = #{stu.age}, birthDay =
+			#{stu.birthDay}, description = #{stu.description} where id =
+			#{stu.id}
+		</foreach>
+	</update>
+
+	<select id="getStuById" parameterType="int" resultType="stu" useCache="true">
+		select *
+		from stu where id = #{_parameter}
+	</select>
+
+	<select id="listAllStu" resultType="stu">
+		select * from stu
+	</select>
+	
+	<select id="getMapValue" parameterType="int" resultType="java.util.HashMap">
+		select * from stu where id = #{_id}
+	</select>
+	
+</mapper>

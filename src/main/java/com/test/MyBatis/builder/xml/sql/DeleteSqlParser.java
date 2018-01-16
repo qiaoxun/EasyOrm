@@ -1,0 +1,32 @@
+package com.test.MyBatis.builder.xml.sql;
+
+import java.util.List;
+
+import org.w3c.dom.Element;
+
+import com.test.MyBatis.builder.StaticSqlSource;
+import com.test.MyBatis.mapping.ParameterMapping;
+import com.test.MyBatis.mapping.SqlCommandType;
+import com.test.MyBatis.mapping.SqlSource;
+import com.test.MyBatis.session.Configuration;
+
+public class DeleteSqlParser extends BaseSqlParser {
+
+	public DeleteSqlParser(Element ele, Configuration configuration, String classNameStr, SqlCommandType sqlCommandType) {
+		super(ele, configuration, classNameStr, sqlCommandType);
+	}
+
+	@Override
+	public SqlSource createSqlSource() {
+		List<ParameterMapping> parameterMappings =  getParameterMappings();
+		cleanSql();
+		SqlSource sqlSource = new StaticSqlSource(sql, parameterMappings, configuration);
+		return sqlSource;
+	}
+	
+	@Override
+	public void prepareSql() {
+		
+	}
+
+}
