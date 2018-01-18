@@ -2,6 +2,7 @@ package com.test.MyBatis.mapping;
 
 import com.test.MyBatis.session.Configuration;
 import com.test.MyBatis.type.JdbcType;
+import com.test.MyBatis.type.TypeHandler;
 
 public class ParameterMapping {
 	private Configuration configuration;
@@ -11,6 +12,8 @@ public class ParameterMapping {
 	private Class<?> javaType = Object.class;
 
 	private JdbcType jdbcType;
+	
+	private TypeHandler<?> typeHandler;
 	
 	public Configuration getConfiguration() {
 		return configuration;
@@ -43,5 +46,12 @@ public class ParameterMapping {
 	public void setJdbcType(JdbcType jdbcType) {
 		this.jdbcType = jdbcType;
 	}
-	
+
+	public TypeHandler<?> getTypeHandler() {
+		return typeHandler;
+	}
+
+	public void setTypeHandler(TypeHandler<?> typeHandler) {
+		this.typeHandler = typeHandler;
+	}
 }

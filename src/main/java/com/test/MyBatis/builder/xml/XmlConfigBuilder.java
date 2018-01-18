@@ -153,7 +153,7 @@ public class XmlConfigBuilder {
 			Element each = (Element) typeAliasNodeList.item(i);
 			String alias = each.getAttribute("alias");
 			String type = each.getAttribute("type");
-			typeAliases.put(type, alias);
+			typeAliases.put(alias, type);
 		}
 		configuration.setTypeAliases(typeAliases);
 	}

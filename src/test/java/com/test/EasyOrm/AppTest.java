@@ -16,7 +16,13 @@ public class AppTest{
 //		session.commit();
 		
 		IStuMapper stuMapper = session.getMapper(IStuMapper.class);
-		stuMapper.update(new Stu());
+		Stu stu = new Stu();
+		stu.setId(1);
+		stu.setAge(1111);
+		stu.setName("go fuck yourself");
+//		stuMapper.update(stu);
+		
+		stuMapper.update2();
 		
 		session.commit();
 	}

@@ -1,7 +1,10 @@
 package com.test.MyBatis.builder.xml.sql;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.w3c.dom.Element;
@@ -12,7 +15,8 @@ import com.test.MyBatis.mapping.SqlCommandType;
 import com.test.MyBatis.mapping.SqlSource;
 import com.test.MyBatis.reflection.ClassUtils;
 import com.test.MyBatis.session.Configuration;
-import com.test.MyBatis.utils.ObjectTypeUtils;
+import com.test.MyBatis.utils.InnerParameters;
+import com.test.MyBatis.utils.JdbcTypeUtils;
 import com.test.MyBatis.utils.SqlHelper;
 
 public abstract class BaseSqlParser implements SqlParser {
@@ -29,7 +33,7 @@ public abstract class BaseSqlParser implements SqlParser {
 	// 类路径加方法名
 	protected String id;
 	
-	// 真正的sql
+	// 真正的 sql
 	protected String sql;
 	
 	// 节点的类型
@@ -42,7 +46,13 @@ public abstract class BaseSqlParser implements SqlParser {
 	protected String source;
 	
 	// 参数的类型
-	protected Class<?> javaType; 
+	protected Class<?> javaType;
+	
+	// 类里面的所有参数
+	protected Map<String, Field> typeFields = new HashMap<String, Field>();
+	
+	// 是否是简单类型数据 比如 基础类型和 String 
+	protected boolean isSimpleObject;
 	
 	public BaseSqlParser(Element ele, Configuration configuration, String classNameStr, SqlCommandType sqlCommandType, String source) {
 		this.ele = ele;
@@ -82,6 +92,21 @@ public abstract class BaseSqlParser implements SqlParser {
 		for (String param : paramsList) {
 			ParameterMapping pm = new ParameterMapping();
 			pm.setProperty(param);
+			pm.setJavaType(javaType);
+			
+			Class<?> paramType = null;
+			
+			if (isSimpleObject) {
+				paramType = javaType;
+			} else {
+				if (!typeFields.containsKey(param)) {
+					throw new RuntimeException(param + " was not found");
+				}
+				paramType = typeFields.get(param).getType();
+			}
+			
+			JdbcTypeUtils.resolveParamType(pm, paramType);
+			
 			pmList.add(pm);
 		}
 		return pmList;
@@ -108,11 +133,21 @@ public abstract class BaseSqlParser implements SqlParser {
 	 */
 	private void dealWithParameterType() {
 		this.parameterType = ele.getAttribute("parameterType");
+		if (StringUtils.isBlank(parameterType)) {
+			return;
+		}
 		// 如果中间有 . 则表明是
 		if (StringUtils.contains(parameterType, ".")) {
 			javaType = ClassUtils.forName(parameterType, source, id);
-		} else if(ObjectTypeUtils.isSimpleObject(javaType)) {
-//			javaType 
+			ClassUtils.resolveClassForFields(javaType, typeFields);
+		} else if(InnerParameters.contains(parameterType)) {
+			javaType = InnerParameters.getValue(parameterType);
+			isSimpleObject = true;
+		} else if (configuration.getTypeAliases().containsKey(parameterType)) {
+			javaType = ClassUtils.forName(configuration.getTypeAliases().get(parameterType), source, id);
+			ClassUtils.resolveClassForFields(javaType, typeFields);
+		} else {
+			throw new RuntimeException(parameterType + " not found");
 		}
 	}
 }
