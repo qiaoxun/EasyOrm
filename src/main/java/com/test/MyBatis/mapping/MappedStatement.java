@@ -14,6 +14,9 @@ public class MappedStatement {
 	
 	private SqlCommandType sqlCommandType;
 	
+	// 来源文件 xx.xml
+	private String source;
+	
 	/**
 	 * 事务执行时间
 	 */
@@ -24,12 +27,13 @@ public class MappedStatement {
 	 */
 	private Integer fatchSize;
 
-	public MappedStatement(Configuration configuration, SqlSource sqlSource, SqlCommandType sqlCommandType, String id) {
+	public MappedStatement(Configuration configuration, SqlSource sqlSource, SqlCommandType sqlCommandType, String id, String source) {
 		this.configuration = configuration;
 		this.sqlSource = sqlSource;
 		this.statementType = StatementType.PREPARED;
 		this.id = id;
 		this.sqlCommandType = sqlCommandType;
+		this.source = source;
 	}
 
 	public Configuration getConfiguration() {
@@ -95,6 +99,14 @@ public class MappedStatement {
 
 	public void setSqlCommandType(SqlCommandType sqlCommandType) {
 		this.sqlCommandType = sqlCommandType;
+	}
+
+	public String getSource() {
+		return source;
+	}
+
+	public void setSource(String source) {
+		this.source = source;
 	}
 	
 }

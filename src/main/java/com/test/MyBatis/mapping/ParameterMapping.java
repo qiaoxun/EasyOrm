@@ -1,6 +1,7 @@
 package com.test.MyBatis.mapping;
 
 import com.test.MyBatis.session.Configuration;
+import com.test.MyBatis.type.JdbcType;
 
 public class ParameterMapping {
 	private Configuration configuration;
@@ -9,6 +10,8 @@ public class ParameterMapping {
 	
 	private Class<?> javaType = Object.class;
 
+	private JdbcType jdbcType;
+	
 	public Configuration getConfiguration() {
 		return configuration;
 	}
@@ -31,6 +34,14 @@ public class ParameterMapping {
 
 	public void setJavaType(Class<?> javaType) {
 		this.javaType = javaType;
+	}
+
+	public JdbcType getJdbcType() {
+		return jdbcType;
+	}
+
+	public void setJdbcType(JdbcType jdbcType) {
+		this.jdbcType = jdbcType;
 	}
 	
 }

@@ -11,7 +11,7 @@ public interface SqlParser {
 	/**
 	 * 预处理sql
 	 */
-	void prepareSql();
+	String prepareSql();
 	
 	/**
 	 * 清理sql的空格，并替换占位符

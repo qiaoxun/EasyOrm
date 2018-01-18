@@ -12,8 +12,8 @@ import com.test.MyBatis.session.Configuration;
 
 public class SelectSqlParser extends BaseSqlParser {
 
-	public SelectSqlParser(Element ele, Configuration configuration, String classNameStr, SqlCommandType sqlCommandType) {
-		super(ele, configuration, classNameStr, sqlCommandType);
+	public SelectSqlParser(Element ele, Configuration configuration, String classNameStr, SqlCommandType sqlCommandType, String source) {
+		super(ele, configuration, classNameStr, sqlCommandType, source);
 	}
 
 	@Override
@@ -25,8 +25,8 @@ public class SelectSqlParser extends BaseSqlParser {
 	}
 	
 	@Override
-	public void prepareSql() {
-		
+	public String prepareSql() {
+		return super.prepareSql();
 	}
 
 }

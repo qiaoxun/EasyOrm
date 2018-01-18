@@ -22,9 +22,12 @@ public class XmlMapperBuilder {
 	
 	private String namespace;
 	
-	public XmlMapperBuilder(InputStream is, Configuration configuration) {
+	private String mapperName;
+	
+	public XmlMapperBuilder(InputStream is, Configuration configuration, String mapperName) {
 		parser = new XPathParser(is);
 		this.configuration = configuration;
+		this.mapperName = mapperName;
 	}
 	
 	public void parse() {
@@ -59,10 +62,10 @@ public class XmlMapperBuilder {
 			SqlParser sqlParser = null;
 			
 			switch(sqlCommandType) {
-				case INSERT : sqlParser = new InsertSqlParser(each, configuration, namespace, sqlCommandType); break;
-				case UPDATE : sqlParser = new UpdateSqlParser(each, configuration, namespace, sqlCommandType); break;
-				case DELETE : sqlParser = new DeleteSqlParser(each, configuration, namespace, sqlCommandType); break;
-				case SELECT : sqlParser = new SelectSqlParser(each, configuration, namespace, sqlCommandType); break;
+				case INSERT : sqlParser = new InsertSqlParser(each, configuration, namespace, sqlCommandType, mapperName); break;
+				case UPDATE : sqlParser = new UpdateSqlParser(each, configuration, namespace, sqlCommandType, mapperName); break;
+				case DELETE : sqlParser = new DeleteSqlParser(each, configuration, namespace, sqlCommandType, mapperName); break;
+				case SELECT : sqlParser = new SelectSqlParser(each, configuration, namespace, sqlCommandType, mapperName); break;
 				default : throw new RuntimeException("SqlCommandType not have yet"); 
 			}
 			

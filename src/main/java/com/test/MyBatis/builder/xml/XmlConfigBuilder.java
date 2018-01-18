@@ -64,9 +64,8 @@ public class XmlConfigBuilder {
 			Element each = (Element) mapperList.item(i);
 			String resource = each.getAttribute("resource");
 			list.add(resource);
-			System.out.println(resource);
 			InputStream is = this.getClass().getClassLoader().getResourceAsStream(resource);
-			XmlMapperBuilder mapperBuilder = new XmlMapperBuilder(is, configuration);
+			XmlMapperBuilder mapperBuilder = new XmlMapperBuilder(is, configuration, resource);
 			mapperBuilder.parse();
 		}
 	}
