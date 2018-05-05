@@ -46,7 +46,7 @@ public class JdbcTypeUtils {
 			TypeHandler<byte[]> th = new BlobTypeHandler();
 			pm.setTypeHandler(th);
 		} else {
-			throw new RuntimeException("com.test.MyBatis.utils.JdbcTypeUtils.resolveParamType : " + paramType.getName() + " not has been deal yet");
+			throw new RuntimeException("com.test.MyBatis.utils.JdbcTypeUtils.resolveParamType : " + paramType.getName() + " not has been dealed yet");
 		}
 	}
 }
