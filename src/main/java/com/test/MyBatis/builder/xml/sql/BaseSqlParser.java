@@ -20,6 +20,8 @@ import com.test.MyBatis.utils.JdbcTypeUtils;
 import com.test.MyBatis.utils.SqlHelper;
 
 public abstract class BaseSqlParser implements SqlParser {
+	
+	private static final String dot = ".";
 
 	// 当前节点
 	protected Element ele;
@@ -65,9 +67,9 @@ public abstract class BaseSqlParser implements SqlParser {
 	
 	private void init() {
 		String methodName = ele.getAttribute("id");
-		this.id = classNameStr + "." + methodName;
+		this.id = classNameStr + dot + methodName;
 		
-		// 解析sql
+		// 解析 sql
 		prepareSql();
 		
 		// deal with the input parameter type
