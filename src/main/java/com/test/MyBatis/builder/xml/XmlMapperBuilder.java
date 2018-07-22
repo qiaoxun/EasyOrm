@@ -66,7 +66,7 @@ public class XmlMapperBuilder {
 				case UPDATE : sqlParser = new UpdateSqlParser(each, configuration, namespace, sqlCommandType, mapperName); break;
 				case DELETE : sqlParser = new DeleteSqlParser(each, configuration, namespace, sqlCommandType, mapperName); break;
 				case SELECT : sqlParser = new SelectSqlParser(each, configuration, namespace, sqlCommandType, mapperName); break;
-				default : throw new RuntimeException("SqlCommandType not have yet"); 
+				default : throw new RuntimeException("SqlCommandType doesn't exists."); 
 			}
 			
 			sqlParser.prepareSql();

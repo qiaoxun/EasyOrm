@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.Set;
 
 public class ObjectTypeUtils {
-	private static Set<Class<?>> simpleClazzSet = new HashSet<>();
+	public static Set<Class<?>> simpleClazzSet = new HashSet<>();
 	
 	static {
 		simpleClazzSet.add(byte.class);

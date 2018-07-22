@@ -7,6 +7,8 @@ import com.test.MyBatis.mapping.MappedStatement;
 import com.test.MyBatis.session.SqlSession;
 
 public class MapperHandler implements InvocationHandler {
+	
+	private String dot = ".";
 
 	private String className;
 	private SqlSession sqlSession;
@@ -22,11 +24,11 @@ public class MapperHandler implements InvocationHandler {
 		Object result = null;
 		// 方法名称
 		String methodName = method.getName();
-		String statement = className + "." + methodName;
+		String statement = className + dot + methodName;
 		MappedStatement ms = sqlSession.getConguration().getMappedStatement(statement);
 		
 		if (ms == null) {
-			throw new RuntimeException("Can not found statement " + statement);
+			throw new RuntimeException("Can not find statement " + statement);
 		}
 		
 		switch (ms.getSqlCommandType()) {

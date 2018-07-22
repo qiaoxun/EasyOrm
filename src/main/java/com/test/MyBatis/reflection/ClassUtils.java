@@ -9,7 +9,7 @@ import org.apache.commons.lang3.reflect.FieldUtils;
 public class ClassUtils {
 	
 	/**
-	 * 
+	 * forName
 	 * @param classPath
 	 * @param source
 	 * @param id
@@ -24,7 +24,7 @@ public class ClassUtils {
 	}
 	
 	/**
-	 * 获取类中所有的字段
+	 * Obtain all fields
 	 * @param clazz
 	 * @param fieldsMap
 	 */
@@ -35,6 +35,12 @@ public class ClassUtils {
 		}
 	}
 	
+	/**
+	 * Obtain the value of the specified field
+	 * @param f
+	 * @param target
+	 * @return
+	 */
 	public static Object getFieldValue(Field f, Object target) {
 		try {
 			f.setAccessible(true);

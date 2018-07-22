@@ -37,7 +37,7 @@ public interface SqlSession extends Closeable {
 	<E> List<E> selectList(String statement);
 	
 	/**
-	 * Retrieve a list of mapped objects from the statement key and patameter 
+	 * Retrieve a list of mapped objects from the statement key and parameter 
 	 * @param statement
 	 * @return
 	 */
@@ -70,7 +70,7 @@ public interface SqlSession extends Closeable {
 	
 	/**
 	 * Execute an insert statement with a given parameter object. 
-	 * Any generated aotuincrement values or selectKey entities will
+	 * Any generated autoincrement values or selectKey entities will
 	 * modify the given parameter object properties. Only number of rows affected will be returned.
 	 * @param statement
 	 * @param parameter
@@ -150,13 +150,13 @@ public interface SqlSession extends Closeable {
 	Configuration getConguration();
 	
 	/**
-	 * Retieves inner datasource connection
+	 * Retrieves inner datasource connection
 	 * @return
 	 */
 	Connection getConnection();
 	
 	/**
-	 * Retrivevs a mapper
+	 * Retrieves a mapper
 	 * @param clazz
 	 * @return
 	 */

@@ -1,13 +1,17 @@
 package com.test.MyBatis.executor.resultset.defaults;
 
+import java.lang.reflect.ParameterizedType;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import com.test.MyBatis.executor.resultset.ResultSetHandler;
+import com.test.MyBatis.utils.ObjectTypeUtils;
 
 public class DefaultResultSetHandler implements ResultSetHandler {
 	
@@ -16,11 +20,14 @@ public class DefaultResultSetHandler implements ResultSetHandler {
 	private List<Integer> columnsType = new ArrayList<Integer>();
 	
 	@Override
-	public List<Object> handleResultSets(Statement statement) {
+	public <E> List<E> handleResultSets(Statement statement) {
 		try {
 			ResultSet rs = statement.getResultSet();
 			ResultSetMetaData metaData = rs.getMetaData();
 			resolveColumns(metaData);
+			
+			@SuppressWarnings("unchecked")
+			Class<E> persistentClass = (Class<E>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
 //			isSimpleObject();
 			
 		} catch (SQLException e) {
@@ -47,10 +54,13 @@ public class DefaultResultSetHandler implements ResultSetHandler {
 	}
 	
 	private boolean isSimpleObject(Class<?> clazz) {
-		if (int.class.isAssignableFrom(clazz)) {
-			
+		Set<Class<?>> simpleClazzSet = ObjectTypeUtils.simpleClazzSet;
+		Iterator<Class<?>> iterator = simpleClazzSet.iterator();
+		while (iterator.hasNext()) {
+			if (iterator.next().isAssignableFrom(clazz)) {
+				return true;
+			}
 		}
-		
 		return false;
 	}
 

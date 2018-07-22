@@ -27,7 +27,6 @@ public class DefaultTransaction implements Transaction {
 	}
 
 	public DefaultTransaction(Connection connection) {
-		super();
 		this.connection = connection;
 	}
 
